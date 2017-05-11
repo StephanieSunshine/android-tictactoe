@@ -27,21 +27,24 @@
                 android:id="@+id/button1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:text=" "
+                android:onClick="buttonOnClick"
+                android:textSize="36sp"
                 android:visibility="visible" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:text=" "
+                android:onClick="buttonOnClick"
+                android:textSize="36sp"
                 android:visibility="visible" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:text=" "
+                android:onClick="buttonOnClick"
+                android:textSize="36sp"
                 android:visibility="visible" />
         </TableRow>
 
@@ -55,21 +58,24 @@
                 android:id="@+id/button4"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:text=" "
+                android:onClick="buttonOnClick"
+                android:textSize="36sp"
                 android:visibility="visible" />
 
             <Button
                 android:id="@+id/button5"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:text=" "
+                android:onClick="buttonOnClick"
+                android:textSize="36sp"
                 android:visibility="visible" />
 
             <Button
                 android:id="@+id/button6"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:text=" "
+                android:onClick="buttonOnClick"
+                android:textSize="36sp"
                 android:visibility="visible" />
         </TableRow>
 
@@ -83,21 +89,24 @@
                 android:id="@+id/button7"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:text=" "
+                android:onClick="buttonOnClick"
+                android:textSize="36sp"
                 android:visibility="visible" />
 
             <Button
                 android:id="@+id/button8"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:text=" "
+                android:onClick="buttonOnClick"
+                android:textSize="36sp"
                 android:visibility="visible" />
 
             <Button
                 android:id="@+id/button9"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:text=" "
+                android:onClick="buttonOnClick"
+                android:textSize="36sp"
                 android:visibility="visible" />
         </TableRow>
 
