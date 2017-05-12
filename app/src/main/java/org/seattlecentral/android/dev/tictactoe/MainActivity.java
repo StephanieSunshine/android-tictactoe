@@ -74,13 +74,14 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
-    public void testForWinner() {
+    public boolean testForWinner() {
         for(Player cp : players) {
             if(t(0,0,cp) && t(1,0,cp) && t(2,0,cp)) {
                 endGame(cp);
+                return(true);
             }
-
         }
+        return(false);
     }
 
     public void buttonOnClick(View v) {
