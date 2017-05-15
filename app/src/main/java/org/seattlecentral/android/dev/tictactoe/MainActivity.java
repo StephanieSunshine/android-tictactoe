@@ -88,6 +88,15 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
+    public void testForTie() {
+        if(t(0,0) && t(0,1) && t(0,2) &&
+           t(1,0) && t(1,1) && t(1,2) &&
+           t(2,0) && t(2,1) && t(2,2)) {
+            gameOver = true;
+            updateStatus("Game is a tie!");
+        }
+    }
+
     public void testForWinner() {
         for(Player cp : players) {
             if((tp(0,0,cp) && tp(1,0,cp) && tp(2,0,cp)) ||
@@ -126,6 +135,7 @@ public class MainActivity extends AppCompatActivity  {
                     break;
                 }
             testForWinner();
+            testForTie();
             }
         }
     }
@@ -137,7 +147,6 @@ public class MainActivity extends AppCompatActivity  {
                 gameGrid[x][y].setText(" ");
             }
         }
-
         gameOver = false;
         int rnd = new Random().nextInt(players.length);
         currentPlayer = players[rnd];
