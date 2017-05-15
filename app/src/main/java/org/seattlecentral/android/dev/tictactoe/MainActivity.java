@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.Random;
 
 import static org.seattlecentral.android.dev.tictactoe.R.id.button1;
 import static org.seattlecentral.android.dev.tictactoe.R.id.button2;
@@ -14,21 +17,25 @@ import static org.seattlecentral.android.dev.tictactoe.R.id.button6;
 import static org.seattlecentral.android.dev.tictactoe.R.id.button7;
 import static org.seattlecentral.android.dev.tictactoe.R.id.button8;
 import static org.seattlecentral.android.dev.tictactoe.R.id.button9;
+import static org.seattlecentral.android.dev.tictactoe.R.id.textGameStatus;
 
 public class MainActivity extends AppCompatActivity  {
+
     // Player X, O
     enum Player { X, O }
-    Player[] players = new Player[] {Player.X, Player.O};
 
+    // List of Players
+    static Player[] players = new Player[] {Player.X, Player.O};
 
-    // None, X, O, Tie
-    enum Winner { N, X, O, T }
+    // Current Player
+    Player currentPlayer;
 
-    Player currentPlayer = Player.X;
-    Boolean gameOver = Boolean.FALSE;
-    Winner winner = Winner.N;
+    // Game Over
+    Boolean gameOver = true;
 
+    // Game Grid
     Button gameGrid[][] = new Button[3][3];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +52,23 @@ public class MainActivity extends AppCompatActivity  {
         gameGrid[2][2] = (Button) findViewById(button9);
     }
 
-    public void endGame(Player w) {
-        if(w == Player.X) {
-            winner = Winner.X;
-            gameOver = true;
-        }
-        if(w == Player.O) {
-            winner = Winner.O;
-            gameOver = true;
+
+    public void updateStatus(String text) {
+        TextView tGS = (TextView) findViewById(textGameStatus);
+        tGS.setText(text);
+    }
+
+    public boolean t(int x, int y) {
+        Button piece = gameGrid[x][y];
+        if(piece.getTag() != null) {
+            return(true);
+        }else{
+            return(false);
         }
     }
 
     // Test Board Location
-    public boolean t(int x, int y, Player player) {
+    public boolean tp(int x, int y, Player player) {
         Button piece = gameGrid[x][y];
         if(piece.getTag() == player) {
             return(true);
@@ -66,55 +77,78 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
-    public void updateStatus() {
-
+    public void endGame(Player w) {
+        if(w == Player.X) {
+            gameOver = true;
+            updateStatus("Player X is the winner!");
+        }
+        if(w == Player.O) {
+            gameOver = true;
+            updateStatus("Player O is the winner!");
+        }
     }
 
-    public void testForTie() {
-
-    }
-
-    public boolean testForWinner() {
+    public void testForWinner() {
         for(Player cp : players) {
-            if(t(0,0,cp) && t(1,0,cp) && t(2,0,cp)) {
-                endGame(cp);
-                return(true);
+            if((tp(0,0,cp) && tp(1,0,cp) && tp(2,0,cp)) ||
+               (tp(0,1,cp) && tp(1,1,cp) && tp(2,1,cp)) ||
+               (tp(0,2,cp) && tp(1,2,cp) && tp(2,2,cp)) ||
+               (tp(0,0,cp) && tp(0,1,cp) && tp(0,2,cp)) ||
+               (tp(1,0,cp) && tp(1,1,cp) && tp(1,2,cp)) ||
+               (tp(2,0,cp) && tp(2,1,cp) && tp(2,2,cp)) ||
+               (tp(0,0,cp) && tp(1,1,cp) && tp(2,2,cp)) ||
+               (tp(2,0,cp) && tp(1,1,cp) && tp(0,2,cp))) { endGame(cp); }
             }
         }
-        return(false);
-    }
 
     public void buttonOnClick(View v) {
 
         // Is the game still running?
-        if(winner == Winner.N){
+        if(!gameOver){
 
+            // Assign current button to placeholder as a Button object
             Button button=(Button) v;
 
             // Is the button blank?
-            if(button.getText() == "") {
+            if(button.getTag() == null) {
                 switch(currentPlayer) {
                     case X:
                         button.setText("X");
                         button.setTag(Player.X);
                         currentPlayer = Player.O;
+                        updateStatus("Player O, it's your turn");
                     break;
                     case O:
                         button.setText("O");
                         button.setTag(Player.O);
                         currentPlayer = Player.X;
+                        updateStatus("Player X, it's your turn!");
                     break;
                 }
-                testForWinner();
-                testForTie();
-                updateStatus();
+            testForWinner();
             }
         }
     }
 
-
     public void buttonNewGameOnClick(View v) {
+        for(int x = 0; x<3; x++) {
+            for(int y = 0; y<3; y++) {
+                gameGrid[x][y].setTag(null);
+                gameGrid[x][y].setText(" ");
+            }
+        }
 
+        gameOver = false;
+        int rnd = new Random().nextInt(players.length);
+        currentPlayer = players[rnd];
+        switch (currentPlayer){
+            case X:
+                updateStatus("Player X, it's your turn!");
+                break;
+            case O:
+                updateStatus("Player O, it's your turn!");
+                break;
+        }
     }
 
 }
